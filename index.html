@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Optimus">
+<meta name="theme-color" content="#3b5bdb">
+<title>Optimus App Adoption</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--tx:#14213d;--mut:#667;--pri:#3b5bdb;--bd:#d9deea;--bad:#c92a2a;--ok:#2b8a3e}
+@media (prefers-color-scheme:dark){:root{--bg:#10131c;--card:#1a1f2c;--tx:#e8ecf5;--mut:#9aa3b8;--pri:#7c93f5;--bd:#2c3446;--bad:#ff8787;--ok:#51cf66}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.w{max-width:640px;margin:0 auto;padding:14px}h1{font-size:20px;margin:6px 0}.d{color:var(--mut);font-size:14px;margin:0 0 12px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+label{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}label:first-child{margin-top:0}.r{color:var(--bad)}
+input[type=text],input[type=email],input[type=password],select{width:100%;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:16px}
+input[type=file]{margin-bottom:8px;max-width:100%}
+.seg{display:flex;gap:8px}.seg button{flex:1;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:15px}.seg button.on{background:var(--pri);color:#fff;border-color:var(--pri)}.seg button:disabled{opacity:.4}
+.btn{width:100%;padding:14px;border:0;border-radius:12px;background:var(--pri);color:#fff;font-size:16px;font-weight:600;margin-top:8px}.btn:disabled{opacity:.45}
+.tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{flex:1;padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);font-weight:600}.tabs button.on{background:var(--pri);color:#fff}
+.h{font-size:12px;color:var(--mut);margin-top:4px}.err{color:var(--bad);font-size:13px;margin:8px 0}.pv{max-height:120px;border-radius:8px;display:block;margin-bottom:8px}
+.k{display:grid;grid-template-columns:1fr 1fr;gap:8px}.k div{background:var(--bg);border-radius:10px;padding:10px}.k b{font-size:22px;display:block}
+.it{padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}.hide{display:none}.lnk{color:var(--pri);text-decoration:underline;cursor:pointer}
+</style></head><body><div class="w">
+<div id="auth" class="hide"><h1>Optimus App Adoption</h1>
+<div class="c"><div id="sg" class="hide"><label>FOS Name</label><input type="text" id="an"><label>FO Code</label><input type="text" id="ac"></div>
+<label>Email</label><input type="email" id="ae"><label>Password (min 6)</label><input type="password" id="ap">
+<div class="err" id="aer"></div><button class="btn" id="ago">Login</button>
+<p class="h" style="text-align:center"><span class="lnk" id="atg">New FO? Sign up</span></p></div></div>
+
+<div id="app" class="hide">
+<div style="display:flex;justify-content:space-between;align-items:center"><h1 id="who"></h1><span class="lnk" id="out">Logout</span></div>
+<div class="tabs"><button id="t1" class="on">Form</button><button id="t2">My Entries</button><button id="t3" class="hide">Dashboard</button></div>
+
+<div id="v1"><p class="d">Please fill in all the details correctly and upload the required screenshots. Ensure all information is verified before submitting the form.</p>
+<div class="c"><label>Application ID / TU ID / SFDC ID <span class="r">*</span></label><input type="text" id="aid" autocapitalize="characters">
+<div class="h">Letters, numbers and dashes only. Each ID can be submitted once.</div>
+<label>Optimus App Installed &amp; Activated? <span class="r">*</span></label><div class="seg" id="ins"><button data-v="1">Yes</button><button data-v="0">No</button></div>
+<label>Customer AA Consent Completed? <span class="r">*</span></label><div class="seg" id="con"><button data-v="1">Yes</button><button data-v="0">No</button></div><div class="h" id="ch"></div>
+<label>Customer Call Status <span class="r">*</span></label><select id="cs"><option value="">Select…</option><option>Call Ringing – No Response</option><option>Switched Off / Not Reachable</option><option>Successfully Connected – Spoke with Customer</option></select><div class="h" id="fu"></div>
+<div id="s1w" class="hide"><label>Upload Optimus App Screenshot <span class="r">*</span></label><input type="file" id="s1" accept="image/*"><img class="pv hide" id="p1"></div>
+<div id="s2w" class="hide"><label>Upload Customer AA Consent Screenshot <span class="r">*</span></label><input type="file" id="s2" accept="image/*"><img class="pv hide" id="p2"></div></div>
+<div class="err" id="er"></div><button class="btn" id="sub" disabled>Submit</button></div>
+
+<div id="v2" class="hide"><div id="ml"></div></div>
+<div id="v3" class="hide"><div class="fl"><input type="text" id="q" placeholder="Search FO code / name / ID"></div>
+<div class="c"><div class="k" id="kp"></div></div><button class="btn" id="exp">⬇ Export CSV</button><div class="c" style="margin-top:12px" id="dl"></div></div>
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const SUPA_URL='YOUR_SUPABASE_URL',SUPA_KEY='YOUR_SUPABASE_ANON_KEY';
+const $=id=>document.getElementById(id);
+if(typeof supabase==='undefined'||SUPA_URL.startsWith('YOUR_')){document.body.innerHTML='<div style="padding:24px;font-family:sans-serif"><h2>Setup needed</h2><p>Add your Supabase URL and anon key inside index.html, then open this page from your GitHub Pages link.</p></div>';throw new Error('setup needed')}
+const sb=supabase.createClient(SUPA_URL,SUPA_KEY);
+const CS=['Call Ringing – No Response','Switched Off / Not Reachable','Successfully Connected – Spoke with Customer'];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let prof=null,st={ins:null,con:null,f1:null,f2:null},signup=false,rows=[];
+function show(v){['auth','app'].forEach(i=>$(i).classList.toggle('hide',i!==v))}
+function tab(n){[1,2,3].forEach(i=>{$('v'+i).classList.toggle('hide',i!==n);$('t'+i).classList.toggle('on',i===n)});if(n===2)mine();if(n===3)dash()}
+[1,2,3].forEach(i=>$('t'+i).onclick=()=>tab(i));
+$('atg').onclick=()=>{signup=!signup;$('sg').classList.toggle('hide',!signup);$('ago').textContent=signup?'Create account':'Login';$('atg').textContent=signup?'Have an account? Login':'New FO? Sign up'};
+$('ago').onclick=async()=>{$('aer').textContent='';try{
+ if(signup){if(!$('an').value.trim()||!$('ac').value.trim())throw{message:'Enter name and FO code'};
+  const{error}=await sb.auth.signUp({email:$('ae').value.trim(),password:$('ap').value,options:{data:{fos_name:$('an').value.trim(),fo_code:$('ac').value.trim()}}});if(error)throw error}
+ else{const{error}=await sb.auth.signInWithPassword({email:$('ae').value.trim(),password:$('ap').value});if(error)throw error}
+ start()}catch(e){$('aer').textContent=e.message}};
+$('out').onclick=async()=>{await sb.auth.signOut();show('auth')};
+async function start(){const{data:{user}}=await sb.auth.getUser();if(!user)return show('auth');
+ const{data,error}=await sb.from('profiles').select().eq('id',user.id).single();
+ if(error){$('aer').textContent='Account not ready. Retry.';return show('auth')}
+ prof=data;$('who').textContent=prof.fos_name+' ('+prof.fo_code+')';$('t3').classList.toggle('hide',prof.role!=='admin');show('app');upd()}
+// ---- form
+function seg(id,k){$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{st[k]=b.dataset.v==='1';upd()})}seg('ins','ins');seg('con','con');
+$('aid').oninput=upd;$('cs').onchange=upd;
+function pick(i,k,p){$(i).onchange=()=>{st[k]=$(i).files[0]||null;if(st[k]){$(p).src=URL.createObjectURL(st[k]);$(p).classList.remove('hide')}else $(p).classList.add('hide');upd()}}pick('s1','f1','p1');pick('s2','f2','p2');
+function upd(){
+ if(st.ins===false)st.con=false;
+ $('ins').querySelectorAll('button').forEach(b=>b.classList.toggle('on',st.ins!==null&&(b.dataset.v==='1')===st.ins));
+ $('con').querySelectorAll('button').forEach(b=>{b.classList.toggle('on',st.con!==null&&(b.dataset.v==='1')===st.con);b.disabled=st.ins===false&&b.dataset.v==='1'});
+ $('ch').textContent=st.ins===false?'Consent is not possible without app installation.':'';
+ $('s1w').classList.toggle('hide',st.ins!==true);$('s2w').classList.toggle('hide',st.con!==true);
+ const c=$('cs').value;$('fu').textContent=(c===CS[0]||c===CS[1])?'⏰ Customer not reached – please schedule a follow-up call.':'';
+ $('sub').disabled=!(/^[A-Za-z0-9-]{3,40}$/.test($('aid').value.trim())&&st.ins!==null&&st.con!==null&&c&&(!st.ins||st.f1)&&(!st.con||st.f2))}
+function shrink(f){return new Promise(res=>{const im=new Image();im.onload=()=>{const s=Math.min(1,1024/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=im.width*s;cv.height=im.height*s;cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);cv.toBlob(b=>res(b||f),'image/jpeg',.6)};im.onerror=()=>res(f);im.src=URL.createObjectURL(f)})}
+async function up(f,tag,id){const{data:{user}}=await sb.auth.getUser(),p=user.id+'/'+id+'_'+tag+'.jpg';
+ const{error}=await sb.storage.from('screenshots').upload(p,await shrink(f),{contentType:'image/jpeg',upsert:true});if(error)throw error;return p}
+$('sub').onclick=async()=>{$('sub').disabled=true;$('sub').textContent='Submitting…';$('er').textContent='';
+ try{const id=$('aid').value.trim().toUpperCase();
+  const p1=st.ins?await up(st.f1,'app',id):null,p2=st.con?await up(st.f2,'consent',id):null;
+  const{error}=await sb.from('submissions').insert({fos_name:prof.fos_name,fo_code:prof.fo_code,app_id:id,installed:st.ins,consent:st.con,call_status:$('cs').value,app_shot_path:p1,consent_shot_path:p2});
+  if(error)throw error;alert('Submitted ✓');
+  st={ins:null,con:null,f1:null,f2:null};['aid','cs','s1','s2'].forEach(i=>$(i).value='');['p1','p2'].forEach(i=>$(i).classList.add('hide'))}
+ catch(e){$('er').textContent=e.code==='23505'?'This Application ID is already submitted.':(e.message||'Failed. Retry.')}
+ $('sub').textContent='Submit';upd()};
+// ---- my entries / dashboard
+async function mine(){const u=(await sb.auth.getUser()).data.user,{data}=await sb.from('submissions').select().eq('user_id',u.id).order('created_at',{ascending:false}).limit(200);
+ $('ml').innerHTML=(data||[]).map(r=>`<div class="c"><b>${esc(r.app_id)}</b><div class="h">Installed: ${r.installed?'Yes':'No'} · Consent: ${r.consent?'Yes':'No'}<br>${esc(r.call_status)}<br>${new Date(r.created_at).toLocaleString()}</div></div>`).join('')||'<div class="c h">No entries yet.</div>'}
+const pct=(a,b)=>b?Math.round(a*100/b):0;
+async function dash(){const{data,error}=await sb.from('submissions').select().order('created_at',{ascending:false}).limit(5000);rows=data||[];drender()}
+function flt(){const q=$('q').value.trim().toLowerCase();return rows.filter(r=>!q||(r.fo_code+r.fos_name+r.app_id).toLowerCase().includes(q))}
+function drender(){const f=flt(),n=f.length,i=f.filter(r=>r.installed).length,c=f.filter(r=>r.consent).length;
+ $('kp').innerHTML=`<div><b>${n}</b>Entries</div><div><b>${new Set(f.map(r=>r.fo_code)).size}</b>Active FOs</div><div><b>${pct(i,n)}%</b>App installed</div><div><b>${pct(c,n)}%</b>AA consent</div>`+CS.map(s=>`<div><b>${f.filter(r=>r.call_status===s).length}</b>${esc(s.split(' –')[0].split(' /')[0])}</div>`).join('');
+ $('dl').innerHTML=f.slice(0,300).map(r=>`<div class="it"><span class="lnk" data-id="${r.id}">${esc(r.app_id)}</span> · ${esc(r.fo_code)}<div class="h">${esc(r.fos_name)} · ${esc(r.call_status)}</div></div>`).join('')}
+$('q').oninput=drender;
+$('dl').onclick=async e=>{const id=e.target.dataset.id;if(!id)return;const r=rows.find(x=>x.id===id);const w=window.open('','_blank');let h='<meta name=viewport content="width=device-width"><body style="font-family:sans-serif"><h3>'+esc(r.app_id)+'</h3>';
+ for(const k of['app_shot_path','consent_shot_path'])if(r[k]){const{data}=await sb.storage.from('screenshots').createSignedUrl(r[k],600);if(data)h+='<img style="max-width:100%;margin-bottom:12px" src="'+data.signedUrl+'">'}
+ w.document.write(h)};
+$('exp').onclick=()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const c='\ufeff'+['FOS Name','FO Code','Application ID','Installed','AA Consent','Call Status','Submitted'].map(q).join(',')+'\n'+flt().map(r=>[r.fos_name,r.fo_code,r.app_id,r.installed?'Yes':'No',r.consent?'Yes':'No',r.call_status,r.created_at].map(q).join(',')).join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='optimus_adoption.csv';a.click()};
+sb.auth.getSession().then(({data})=>data.session?start():show('auth'));
+</script></body></html>
